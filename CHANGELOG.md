@@ -30,6 +30,7 @@
 - Aggiunto servizio Docker `payment-core` mock separato (WireMock) e profilo Docker app in `mode=http`.
 - Aggiunto enforcement Git feature-branch-only con hook locali (`.githooks`) e setup script (`scripts/setup-git-hooks.sh`).
 - Aggiunto blueprint multi-agent AI con Ollama + function calling (`docs/multi-agent-ollama-architecture.md`, `agents/*`, `docs/schemas/*`).
+- Aggiunto orchestratore multi-agent API minimale (`agents/orchestrator_api.py`) con profilo Docker `agents`.
 
 ### Notes
 - Build/test locali richiedono Maven installato o container build.

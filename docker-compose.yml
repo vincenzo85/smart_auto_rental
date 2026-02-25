@@ -67,5 +67,22 @@ services:
       payment-core:
         condition: service_healthy
 
+  agent-orchestrator:
+    profiles: ["agents"]
+    build:
+      context: ./agents
+    container_name: smart-rental-agent-orchestrator
+    environment:
+      AGENT_DEFAULT_MODE: stub
+      OLLAMA_BASE_URL: http://host.docker.internal:11434
+      OLLAMA_MODEL: qwen2.5-coder:14b
+      REPO_ROOT: /workspace
+    volumes:
+      - ./:/workspace
+    ports:
+      - "8091:8091"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
 volumes:
   postgres_data:

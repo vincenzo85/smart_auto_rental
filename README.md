@@ -147,6 +147,7 @@ Monolite modulare con confini per sottosistema; transazioni su booking; servizi 
 │   ├── database-access.md
 │   ├── payment-core-integration.md
 │   ├── multi-agent-ollama-architecture.md
+│   ├── multi-agent-orchestrator-api.md
 │   ├── scaffold-cli-guide.md
 │   └── testing-e2e-regression.md
 ├── docker/
@@ -157,7 +158,10 @@ Monolite modulare con confini per sottosistema; transazioni su booking; servizi 
 │   ├── agent-registry.example.yaml
 │   ├── tool-manifest.example.json
 │   ├── request.example.json
-│   └── langgraph_skeleton.py
+│   ├── langgraph_skeleton.py
+│   ├── orchestrator_api.py
+│   ├── requirements.txt
+│   └── Dockerfile
 ├── scripts/
 │   ├── scaffold-cli.sh
 │   ├── generate-single-file.sh
@@ -411,6 +415,10 @@ curl -X POST http://localhost:8080/api/v1/integrations/payments/webhook \
 - quickstart LangGraph/Ollama:
   - `agents/README.md`
   - `agents/langgraph_skeleton.py`
+- orchestratore API operativo (FastAPI):
+  - `agents/orchestrator_api.py`
+  - `docs/multi-agent-orchestrator-api.md`
+  - avvio docker: `docker compose --profile agents up -d --build agent-orchestrator`
 
 ## 14) Roadmap evolutiva
 
