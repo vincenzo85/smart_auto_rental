@@ -15,6 +15,7 @@
 - [x] Gestione manutenzione + storico
 - [x] OpenAPI/Swagger
 - [x] Seed iniziale dati demo
+- [x] Dashboard grafica modulare (auth, availability, booking, admin report)
 
 ## Funzioni Interessanti
 - [x] Pricing dinamico semplice
@@ -35,6 +36,7 @@
 - [x] Unit test base
 - [x] Integration test base
 - [x] End-to-end test base (MockMvc)
+- [x] UI smoke test (render template + module bootstrap)
 
 ## Processo/Governance
 - [x] Documentazione README

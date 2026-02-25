@@ -17,6 +17,8 @@
 - Dockerfile + docker-compose (app, postgres, pgadmin).
 - Test unit/integration iniziali.
 - Script locali per test di versionamento e data smoke.
+- Dashboard grafica modulare su `/` e `/ui`.
+- UI controller test per rendering template.
 
 ### Notes
 - Build/test locali richiedono Maven installato o container build.

@@ -147,8 +147,11 @@ Monolite modulare con confini per sottosistema; transazioni su booking; servizi 
 │   └── run-data-smoke-tests.sh
 └── src/
     ├── main/
-    │   ├── java/com/smartautorental/platform/... (moduli)
+    │   ├── java/com/smartautorental/platform/... (moduli backend + UiController)
     │   └── resources/
+    │       ├── templates/index.html
+    │       ├── static/assets/css/app.css
+    │       ├── static/assets/js/*.js (frontend modules)
     │       ├── application.yml
     │       ├── application-docker.yml
     │       ├── application-test.yml
@@ -197,6 +200,10 @@ Monolite modulare con confini per sottosistema; transazioni su booking; servizi 
 - `GET /api/v1/integrations/availability` (`X-API-KEY`)
 - `GET /api/v1/integrations/bookings/status` (`X-API-KEY`)
 
+### UI
+- `GET /` (dashboard grafica modulare)
+- `GET /ui` (alias dashboard)
+
 ### Docs/Observability
 - `GET /swagger-ui.html`
 - `GET /v3/api-docs`
@@ -230,6 +237,9 @@ Relazioni principali:
 ```bash
 docker compose up --build
 ```
+
+Dashboard grafica:
+- `http://localhost:8080/`
 
 ### Locale
 Prerequisiti: Java 21 + Maven 3.9+
@@ -297,6 +307,8 @@ curl -X POST http://localhost:8080/api/v1/integrations/payments/webhook \
   - pagamento + conferma booking (`PaymentConfirmationIntegrationTest`)
 - End-to-end test (MockMvc + JWT + PostgreSQL container):
   - flusso login -> availability -> booking (`BookingE2ETest`)
+- UI test:
+  - rendering dashboard (`UiControllerTest`)
 - Script test di versionamento:
   - `./scripts/run-versioning-checks.sh`
 - Script test dati su DB seed/migration:

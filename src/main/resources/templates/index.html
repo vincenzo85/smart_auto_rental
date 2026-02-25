@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Auto Rental Console</title>
+    <link rel="stylesheet" href="/assets/css/app.css">
+</head>
+<body>
+<div class="bg-orb bg-orb-a" aria-hidden="true"></div>
+<div class="bg-orb bg-orb-b" aria-hidden="true"></div>
+
+<main class="layout">
+    <header class="hero">
+        <p class="eyebrow">Smart Auto Rental Platform</p>
+        <h1>Operational Console</h1>
+        <p class="hero-subtitle">
+            Dashboard unica per login, disponibilita, prenotazioni e report amministrativi.
+        </p>
+        <div class="status-strip">
+            <span id="authBadge" class="badge badge-offline">Non autenticato</span>
+            <span id="roleBadge" class="badge badge-neutral">Ruolo: -</span>
+            <button id="logoutBtn" class="btn btn-ghost" type="button" disabled>Logout</button>
+        </div>
+    </header>
+
+    <section class="panel card auth-card">
+        <h2>Accesso</h2>
+        <form id="loginForm" class="grid-form">
+            <label>
+                Email
+                <input id="emailInput" name="email" type="email" required placeholder="customer@smartauto.local">
+            </label>
+            <label>
+                Password
+                <input id="passwordInput" name="password" type="password" required placeholder="Customer123!">
+            </label>
+            <button class="btn btn-primary" type="submit">Accedi</button>
+        </form>
+    </section>
+
+    <section class="panel card">
+        <h2>Ricerca Disponibilita</h2>
+        <form id="availabilityForm" class="grid-form grid-form-4">
+            <label>
+                Sede
+                <select name="branchId" required>
+                    <option value="1">Milano Centrale (1)</option>
+                    <option value="2">Roma Termini (2)</option>
+                </select>
+            </label>
+            <label>
+                Categoria
+                <select name="category">
+                    <option value="">Tutte</option>
+                    <option value="ECONOMY">Economy</option>
+                    <option value="SUV">SUV</option>
+                    <option value="LUXURY">Luxury</option>
+                    <option value="VAN">Van</option>
+                </select>
+            </label>
+            <label>
+                Inizio
+                <input name="startTime" type="datetime-local" required>
+            </label>
+            <label>
+                Fine
+                <input name="endTime" type="datetime-local" required>
+            </label>
+            <button class="btn btn-primary" type="submit">Cerca Auto</button>
+        </form>
+
+        <div id="availabilityResults" class="cards-grid" aria-live="polite"></div>
+    </section>
+
+    <section class="panel card">
+        <h2>Prenotazione</h2>
+        <form id="bookingForm" class="grid-form grid-form-4">
+            <label>
+                Auto selezionata
+                <input name="carId" type="number" readonly required>
+            </label>
+            <label>
+                Inizio
+                <input name="startTime" type="datetime-local" required>
+            </label>
+            <label>
+                Fine
+                <input name="endTime" type="datetime-local" required>
+            </label>
+            <label>
+                Coupon
+                <input name="couponCode" type="text" placeholder="WELCOME10">
+            </label>
+            <label class="inline-choice">
+                <input name="insuranceSelected" type="checkbox">
+                Assicurazione
+            </label>
+            <label class="inline-choice">
+                <input name="payAtDesk" type="checkbox">
+                Pay at desk
+            </label>
+            <label class="inline-choice">
+                <input name="allowWaitlist" type="checkbox">
+                Waitlist
+            </label>
+            <button class="btn btn-primary" type="submit">Conferma Prenotazione</button>
+        </form>
+        <pre id="bookingOutput" class="output-box"></pre>
+    </section>
+
+    <section class="panel card">
+        <div class="section-head">
+            <h2>Le Mie Prenotazioni</h2>
+            <button id="refreshBookingsBtn" class="btn btn-secondary" type="button">Aggiorna</button>
+        </div>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Codice</th>
+                    <th>Auto</th>
+                    <th>Stato</th>
+                    <th>Pagamento</th>
+                    <th>Totale</th>
+                </tr>
+                </thead>
+                <tbody id="bookingsTableBody"></tbody>
+            </table>
+        </div>
+    </section>
+
+    <section id="adminPanel" class="panel card hidden">
+        <div class="section-head">
+            <h2>Admin Reports</h2>
+            <button id="loadAdminReportsBtn" class="btn btn-secondary" type="button">Carica Report</button>
+        </div>
+        <div class="admin-grid">
+            <div>
+                <h3>Top Rented Cars</h3>
+                <ul id="topRentedList" class="list"></ul>
+            </div>
+            <div>
+                <h3>Utilization Branch 1</h3>
+                <pre id="utilizationOutput" class="output-box"></pre>
+            </div>
+        </div>
+    </section>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</main>
+
+<script type="module" src="/assets/js/app.js"></script>
+</body>
+</html>

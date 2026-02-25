@@ -4,3 +4,5 @@
 *.log
 .DS_Store
 .env
+single-output.txt
+project-single-file.txt
