@@ -16,6 +16,7 @@
 - Flyway migrations + seed iniziale.
 - Dockerfile + docker-compose (app, postgres, pgadmin).
 - Test unit/integration iniziali.
+- Script locali per test di versionamento e data smoke.
 
 ### Notes
 - Build/test locali richiedono Maven installato o container build.
