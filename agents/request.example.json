@@ -1,0 +1,25 @@
+{
+  "id": "CR-2026-0021",
+  "type": "defect",
+  "title": "Payment transactions visibility leak",
+  "description": "A customer can query payment history of another booking if booking ID is known.",
+  "risk_level": "high",
+  "acceptance_criteria": [
+    "Customer can read only own booking transactions",
+    "Admin and operator can read all transactions",
+    "Regression test covers forbidden path"
+  ],
+  "scope": {
+    "include_paths": [
+      "src/main/java/com/smartautorental/platform/payment/**",
+      "src/test/java/com/smartautorental/platform/booking/**"
+    ],
+    "exclude_paths": [
+      "src/main/resources/static/**"
+    ]
+  },
+  "metadata": {
+    "reported_by": "qa",
+    "severity": "high"
+  }
+}

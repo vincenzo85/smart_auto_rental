@@ -65,25 +65,33 @@ ADMIN_TOKEN="$(echo "$RESPONSE_BODY" | jq -r '.token')"
 [[ -n "$ADMIN_TOKEN" && "$ADMIN_TOKEN" != "null" ]] || fail "Admin token missing"
 pass "Admin login"
 
-START_TIME="$(date -u -d '+5 days' +%Y-%m-%dT10:00:00Z)"
-END_TIME="$(date -u -d '+7 days' +%Y-%m-%dT10:00:00Z)"
+for offset in 5 8 11 14 17 20 23 26 29 32; do
+  START_TIME="$(date -u -d "+${offset} days" +%Y-%m-%dT10:00:00Z)"
+  END_TIME="$(date -u -d "+$((offset + 2)) days" +%Y-%m-%dT10:00:00Z)"
+  START_ENC="$(urlencode "$START_TIME")"
+  END_ENC="$(urlencode "$END_TIME")"
 
-START_ENC="$(urlencode "$START_TIME")"
-END_ENC="$(urlencode "$END_TIME")"
+  request_json GET "/api/v1/availability?branchId=1&startTime=$START_ENC&endTime=$END_ENC&category=ECONOMY" "$CUSTOMER_TOKEN"
+  [[ "$RESPONSE_STATUS" == "200" ]] || fail "Availability search failed: $RESPONSE_STATUS $RESPONSE_BODY"
+  AVAIL_COUNT="$(echo "$RESPONSE_BODY" | jq 'length')"
 
-request_json GET "/api/v1/availability?branchId=1&startTime=$START_ENC&endTime=$END_ENC&category=ECONOMY" "$CUSTOMER_TOKEN"
-[[ "$RESPONSE_STATUS" == "200" ]] || fail "Availability search failed: $RESPONSE_STATUS $RESPONSE_BODY"
-AVAIL_COUNT="$(echo "$RESPONSE_BODY" | jq 'length')"
-(( AVAIL_COUNT > 0 )) || fail "No cars available for E2E"
-CAR_ID="$(echo "$RESPONSE_BODY" | jq -r '.[0].carId')"
-[[ -n "$CAR_ID" && "$CAR_ID" != "null" ]] || fail "carId not found"
-pass "Availability search ($AVAIL_COUNT cars)"
+  if (( AVAIL_COUNT > 0 )); then
+    CAR_ID="$(echo "$RESPONSE_BODY" | jq -r '.[0].carId')"
+    [[ -n "$CAR_ID" && "$CAR_ID" != "null" ]] || fail "carId not found"
+    pass "Availability search ($AVAIL_COUNT cars) window +${offset}d"
+    break
+  fi
+done
+
+if [[ -z "${CAR_ID:-}" || "${CAR_ID:-}" == "null" ]]; then
+  fail "No cars available for E2E in tested windows"
+fi
 
 BOOKING_PAYLOAD="$(jq -nc \
   --argjson carId "$CAR_ID" \
   --arg start "$START_TIME" \
   --arg end "$END_TIME" \
-  '{carId:$carId,startTime:$start,endTime:$end,insuranceSelected:true,couponCode:"WELCOME10",payAtDesk:false,allowWaitlist:false,forcedPaymentStatus:"SUCCESS"}')"
+  '{carId:$carId,startTime:$start,endTime:$end,insuranceSelected:true,couponCode:"WELCOME10",payAtDesk:false,allowWaitlist:false}')"
 
 request_json POST "/api/v1/bookings" "$CUSTOMER_TOKEN" "$BOOKING_PAYLOAD"
 [[ "$RESPONSE_STATUS" == "201" ]] || fail "Create booking failed: $RESPONSE_STATUS $RESPONSE_BODY"

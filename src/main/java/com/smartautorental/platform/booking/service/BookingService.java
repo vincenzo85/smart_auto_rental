@@ -122,7 +122,7 @@ public class BookingService {
                 "Booking created for car=" + car.getLicensePlate());
 
         if (!request.payAtDesk()) {
-            PaymentResult paymentResult = paymentService.processInitialPayment(booking, request.forcedPaymentStatus());
+            PaymentResult paymentResult = paymentService.processInitialPayment(booking);
             applyPaymentOutcome(booking, paymentResult.status());
             bookingAuditService.log(booking.getId(), "PAYMENT_ATTEMPT", customer.getEmail(),
                     "Payment status=" + paymentResult.status() + " ref=" + paymentResult.providerReference());

@@ -37,16 +37,34 @@ services:
     depends_on:
       - postgres
 
+  payment-core:
+    image: wiremock/wiremock:3.9.1
+    container_name: smart-rental-payment-core
+    volumes:
+      - ./docker/payment-core-mock/mappings:/home/wiremock/mappings:ro
+    ports:
+      - "8090:8080"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:8080/__admin/mappings >/dev/null 2>&1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
   app:
     build: .
     container_name: smart-rental-app
     environment:
       SPRING_PROFILES_ACTIVE: docker
       APP_INTEGRATIONS_API_KEY: integration-docker-key
+      APP_PAYMENT_CORE_MODE: http
+      APP_PAYMENT_CORE_BASE_URL: http://payment-core:8080
+      APP_PAYMENT_CORE_CHARGE_PATH: /api/v1/core/payments/charge
     ports:
       - "8080:8080"
     depends_on:
       postgres:
+        condition: service_healthy
+      payment-core:
         condition: service_healthy
 
 volumes:

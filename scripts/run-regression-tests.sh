@@ -75,19 +75,30 @@ pass "Regression user registration"
 
 PAST_START="$(date -u -d '-1 day' +%Y-%m-%dT10:00:00Z)"
 PAST_END="$(date -u -d '+1 day' +%Y-%m-%dT10:00:00Z)"
-PAST_PAYLOAD="$(jq -nc --arg start "$PAST_START" --arg end "$PAST_END" '{carId:1,startTime:$start,endTime:$end,insuranceSelected:false,payAtDesk:false,allowWaitlist:false,forcedPaymentStatus:"SUCCESS"}')"
+PAST_PAYLOAD="$(jq -nc --arg start "$PAST_START" --arg end "$PAST_END" '{carId:1,startTime:$start,endTime:$end,insuranceSelected:false,payAtDesk:false,allowWaitlist:false}')"
 request_json POST "/api/v1/bookings" "$TOKEN" "$PAST_PAYLOAD"
 [[ "$RESPONSE_STATUS" == "400" ]] || fail "Past booking should return 400, got $RESPONSE_STATUS"
 pass "Past date validation"
 
-START_TIME="$(date -u -d '+15 days' +%Y-%m-%dT10:00:00Z)"
-END_TIME="$(date -u -d '+17 days' +%Y-%m-%dT10:00:00Z)"
-request_json GET "/api/v1/availability?branchId=1&startTime=$(urlencode "$START_TIME")&endTime=$(urlencode "$END_TIME")&category=ECONOMY" "$TOKEN"
-[[ "$RESPONSE_STATUS" == "200" ]] || fail "Availability failed"
-CAR_ID="$(echo "$RESPONSE_BODY" | jq -r '.[0].carId')"
-[[ -n "$CAR_ID" && "$CAR_ID" != "null" ]] || fail "No car available for conflict test"
+for offset in 15 18 21 24 27 30 33 36; do
+  START_TIME="$(date -u -d "+${offset} days" +%Y-%m-%dT10:00:00Z)"
+  END_TIME="$(date -u -d "+$((offset + 2)) days" +%Y-%m-%dT10:00:00Z)"
+  request_json GET "/api/v1/availability?branchId=1&startTime=$(urlencode "$START_TIME")&endTime=$(urlencode "$END_TIME")&category=ECONOMY" "$TOKEN"
+  [[ "$RESPONSE_STATUS" == "200" ]] || fail "Availability failed"
+  AVAIL_COUNT="$(echo "$RESPONSE_BODY" | jq 'length')"
 
-BOOKING_PAYLOAD="$(jq -nc --argjson carId "$CAR_ID" --arg start "$START_TIME" --arg end "$END_TIME" '{carId:$carId,startTime:$start,endTime:$end,insuranceSelected:false,payAtDesk:false,allowWaitlist:false,forcedPaymentStatus:"SUCCESS"}')"
+  if (( AVAIL_COUNT > 0 )); then
+    CAR_ID="$(echo "$RESPONSE_BODY" | jq -r '.[0].carId')"
+    [[ -n "$CAR_ID" && "$CAR_ID" != "null" ]] || fail "No car available for conflict test"
+    break
+  fi
+done
+
+if [[ -z "${CAR_ID:-}" || "${CAR_ID:-}" == "null" ]]; then
+  fail "No car available for conflict test"
+fi
+
+BOOKING_PAYLOAD="$(jq -nc --argjson carId "$CAR_ID" --arg start "$START_TIME" --arg end "$END_TIME" '{carId:$carId,startTime:$start,endTime:$end,insuranceSelected:false,payAtDesk:false,allowWaitlist:false}')"
 request_json POST "/api/v1/bookings" "$TOKEN" "$BOOKING_PAYLOAD"
 [[ "$RESPONSE_STATUS" == "201" ]] || fail "First booking failed"
 BOOKING_ID="$(echo "$RESPONSE_BODY" | jq -r '.id')"

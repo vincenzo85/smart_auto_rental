@@ -67,7 +67,6 @@ export function initBookingModule() {
       couponCode: String(formData.get("couponCode") || "").trim() || null,
       payAtDesk: formData.get("payAtDesk") === "on",
       allowWaitlist: formData.get("allowWaitlist") === "on",
-      forcedPaymentStatus: null,
     };
 
     try {

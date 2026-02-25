@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://smartauto.local/schemas/agent-output.schema.json",
+  "title": "Generic Agent Output",
+  "type": "object",
+  "required": ["agent_id", "status", "summary"],
+  "properties": {
+    "agent_id": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["ok", "blocked", "needs_human"]
+    },
+    "summary": {
+      "type": "string"
+    },
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["type", "value"],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["plan", "patch", "test_patch", "report", "finding"]
+          },
+          "value": {}
+        },
+        "additionalProperties": false
+      }
+    },
+    "next_action": {
+      "type": "string",
+      "enum": ["continue", "retry", "handoff_human", "abort"]
+    }
+  },
+  "additionalProperties": false
+}

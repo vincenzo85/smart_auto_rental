@@ -27,8 +27,7 @@ class PaymentConfirmationIntegrationTest extends AbstractIntegrationTest {
                 true,
                 "WELCOME10",
                 false,
-                false,
-                PaymentStatus.SUCCESS
+                false
         ));
 
         assertThat(response.status()).isEqualTo(BookingStatus.CONFIRMED);

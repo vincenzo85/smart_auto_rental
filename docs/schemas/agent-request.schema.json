@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://smartauto.local/schemas/agent-request.schema.json",
+  "title": "Agent Request",
+  "type": "object",
+  "required": ["id", "type", "title", "description", "risk_level", "acceptance_criteria"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 3
+    },
+    "type": {
+      "type": "string",
+      "enum": ["change_request", "defect", "test_request"]
+    },
+    "title": {
+      "type": "string",
+      "minLength": 5
+    },
+    "description": {
+      "type": "string",
+      "minLength": 10
+    },
+    "risk_level": {
+      "type": "string",
+      "enum": ["low", "medium", "high", "critical"]
+    },
+    "acceptance_criteria": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 3
+      }
+    },
+    "scope": {
+      "type": "object",
+      "properties": {
+        "include_paths": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "exclude_paths": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      },
+      "additionalProperties": false
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": false
+}
