@@ -160,10 +160,26 @@
             background: #fff;
         }
 
+        .image-zoom-trigger {
+            width: 100%;
+            display: block;
+            border: 0;
+            padding: 0;
+            margin: 0;
+            background: transparent;
+            cursor: zoom-in;
+        }
+
         img {
             width: 100%;
             display: block;
             height: auto;
+        }
+
+        .zoom-hint {
+            margin: 0.55rem 0 0;
+            color: var(--muted);
+            font-size: 0.84rem;
         }
 
         audio {
@@ -193,6 +209,55 @@
             font-size: 0.88rem;
         }
 
+        .zoom-dialog {
+            border: 0;
+            border-radius: 16px;
+            width: min(96vw, 1200px);
+            padding: 0;
+            background: rgba(10, 16, 20, 0.96);
+            color: #f7fbff;
+        }
+
+        .zoom-dialog::backdrop {
+            background: rgba(9, 16, 21, 0.68);
+            backdrop-filter: blur(2px);
+        }
+
+        .zoom-toolbar {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.45rem;
+            padding: 0.7rem;
+        }
+
+        .zoom-btn {
+            border: 1px solid rgba(247, 251, 255, 0.35);
+            background: rgba(247, 251, 255, 0.06);
+            color: #f7fbff;
+            border-radius: 999px;
+            padding: 0.35rem 0.7rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .zoom-viewport {
+            max-height: 78vh;
+            overflow: auto;
+            padding: 0 0.85rem 0.85rem;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            touch-action: pan-x pan-y pinch-zoom;
+        }
+
+        #zoomedImage {
+            max-width: none;
+            width: auto;
+            height: auto;
+            transform-origin: top center;
+            transition: transform 110ms ease-out;
+        }
+
         @keyframes rise {
             from {
                 transform: translateY(12px);
@@ -215,9 +280,9 @@
             Pubblicabile direttamente dalla cartella <span class="mono">/docs</span>.
         </p>
         <div class="actions">
-            <a class="btn btn-primary" href="../README.md">Apri README principale</a>
-            <a class="btn btn-secondary" href="README.md">Apri indice docs</a>
-            <a class="btn btn-secondary" href="multi-agent-ollama-architecture.md">Apri blueprint multi-agent</a>
+            <a class="btn btn-primary" href="https://github.com/vincenzo85/smart_auto_rental/blob/main/README.md" target="_blank" rel="noopener noreferrer">Apri README principale</a>
+            <a class="btn btn-secondary" href="https://github.com/vincenzo85/smart_auto_rental/blob/main/docs/README.md" target="_blank" rel="noopener noreferrer">Apri indice docs</a>
+            <a class="btn btn-secondary" href="https://github.com/vincenzo85/smart_auto_rental/blob/main/docs/multi-agent-ollama-architecture.md" target="_blank" rel="noopener noreferrer">Apri blueprint multi-agent</a>
         </div>
     </section>
 
@@ -226,16 +291,22 @@
             <h2>Architettura piattaforma</h2>
             <p>Vista ad alto livello della piattaforma di noleggio auto intelligente.</p>
             <div class="media">
-                <img src="Architettura%20piattaforma%20noleggio%20auto%20intelligente.png" alt="Diagramma architettura piattaforma noleggio auto intelligente">
+                <button type="button" class="image-zoom-trigger" data-zoom-src="Architettura%20piattaforma%20noleggio%20auto%20intelligente.png" data-zoom-alt="Diagramma architettura piattaforma noleggio auto intelligente">
+                    <img src="Architettura%20piattaforma%20noleggio%20auto%20intelligente.png" alt="Diagramma architettura piattaforma noleggio auto intelligente">
+                </button>
             </div>
+            <p class="zoom-hint">Clicca l'immagine per zoom (+/- e reset).</p>
         </article>
 
         <article class="card span-5 delay-2">
             <h2>Mind map progetto</h2>
             <p>Mappa concettuale con componenti principali e relazioni funzionali.</p>
             <div class="media">
-                <img src="NotebookLM%20Mind%20Map.png" alt="Mind map del progetto Smart Auto Rental">
+                <button type="button" class="image-zoom-trigger" data-zoom-src="NotebookLM%20Mind%20Map.png" data-zoom-alt="Mind map del progetto Smart Auto Rental">
+                    <img src="NotebookLM%20Mind%20Map.png" alt="Mind map del progetto Smart Auto Rental">
+                </button>
             </div>
+            <p class="zoom-hint">Clicca l'immagine per zoom (+/- e reset).</p>
         </article>
 
         <article class="card span-6 delay-3">
@@ -251,18 +322,114 @@
         <article class="card span-6 delay-3">
             <h2>Guide tecniche correlate</h2>
             <ul>
-                <li><a href="payment-core-integration.md">Integrazione payment core</a></li>
-                <li><a href="multi-agent-orchestrator-api.md">API orchestratore agenti</a></li>
-                <li><a href="testing-e2e-regression.md">Strategia test E2E e regressione</a></li>
-                <li><a href="git-workflow.md">Workflow Git del progetto</a></li>
-                <li><a href="scaffold-cli-guide.md">Guida scaffold CLI</a></li>
+                <li><a href="https://github.com/vincenzo85/smart_auto_rental/blob/main/docs/payment-core-integration.md" target="_blank" rel="noopener noreferrer">Integrazione payment core</a></li>
+                <li><a href="https://github.com/vincenzo85/smart_auto_rental/blob/main/docs/multi-agent-orchestrator-api.md" target="_blank" rel="noopener noreferrer">API orchestratore agenti</a></li>
+                <li><a href="https://github.com/vincenzo85/smart_auto_rental/blob/main/docs/testing-e2e-regression.md" target="_blank" rel="noopener noreferrer">Strategia test E2E e regressione</a></li>
+                <li><a href="https://github.com/vincenzo85/smart_auto_rental/blob/main/docs/git-workflow.md" target="_blank" rel="noopener noreferrer">Workflow Git del progetto</a></li>
+                <li><a href="https://github.com/vincenzo85/smart_auto_rental/blob/main/docs/scaffold-cli-guide.md" target="_blank" rel="noopener noreferrer">Guida scaffold CLI</a></li>
             </ul>
         </article>
     </section>
+
+    <dialog id="zoomDialog" class="zoom-dialog" aria-label="Zoom immagine">
+        <div class="zoom-toolbar">
+            <button type="button" class="zoom-btn" id="zoomOutBtn">-</button>
+            <button type="button" class="zoom-btn" id="zoomResetBtn">100%</button>
+            <button type="button" class="zoom-btn" id="zoomInBtn">+</button>
+            <button type="button" class="zoom-btn" id="zoomCloseBtn">Chiudi</button>
+        </div>
+        <div class="zoom-viewport">
+            <img id="zoomedImage" alt="Anteprima zoom">
+        </div>
+    </dialog>
 
     <footer>
         Smart Auto Rental Platform - Documentazione pubblicabile su GitHub Pages da <span class="mono">/docs</span>
     </footer>
 </main>
+<script>
+    (function () {
+        const dialog = document.getElementById('zoomDialog');
+        const zoomedImage = document.getElementById('zoomedImage');
+        const zoomOutBtn = document.getElementById('zoomOutBtn');
+        const zoomInBtn = document.getElementById('zoomInBtn');
+        const zoomResetBtn = document.getElementById('zoomResetBtn');
+        const zoomCloseBtn = document.getElementById('zoomCloseBtn');
+        const triggers = document.querySelectorAll('.image-zoom-trigger');
+
+        if (!dialog || !zoomedImage || triggers.length === 0 || typeof dialog.showModal !== 'function') {
+            return;
+        }
+
+        const minZoom = 1;
+        const maxZoom = 4;
+        const zoomStep = 0.25;
+        let zoom = 1;
+
+        function clamp(value, min, max) {
+            return Math.min(max, Math.max(min, value));
+        }
+
+        function applyZoom(nextZoom) {
+            zoom = clamp(nextZoom, minZoom, maxZoom);
+            zoomedImage.style.transform = 'scale(' + zoom + ')';
+            zoomResetBtn.textContent = Math.round(zoom * 100) + '%';
+        }
+
+        triggers.forEach(function (button) {
+            button.addEventListener('click', function () {
+                const src = button.getAttribute('data-zoom-src');
+                const alt = button.getAttribute('data-zoom-alt') || 'Anteprima zoom';
+                if (!src) {
+                    return;
+                }
+                zoomedImage.src = src;
+                zoomedImage.alt = alt;
+                applyZoom(1);
+                dialog.showModal();
+            });
+        });
+
+        zoomInBtn.addEventListener('click', function () {
+            applyZoom(zoom + zoomStep);
+        });
+
+        zoomOutBtn.addEventListener('click', function () {
+            applyZoom(zoom - zoomStep);
+        });
+
+        zoomResetBtn.addEventListener('click', function () {
+            applyZoom(1);
+        });
+
+        zoomCloseBtn.addEventListener('click', function () {
+            dialog.close();
+        });
+
+        dialog.addEventListener('click', function (event) {
+            if (event.target === dialog) {
+                dialog.close();
+            }
+        });
+
+        document.addEventListener('keydown', function (event) {
+            if (!dialog.open) {
+                return;
+            }
+            if (event.key === '+' || event.key === '=') {
+                event.preventDefault();
+                applyZoom(zoom + zoomStep);
+            }
+            if (event.key === '-') {
+                event.preventDefault();
+                applyZoom(zoom - zoomStep);
+            }
+            if (event.key === '0') {
+                event.preventDefault();
+                applyZoom(1);
+            }
+        });
+    })();
+</script>
 </body>
 </html>
