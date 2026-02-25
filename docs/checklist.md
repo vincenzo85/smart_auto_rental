@@ -43,6 +43,8 @@
 - [x] Workflow branch + commit conventions
 - [x] Changelog versionato
 - [x] Engine versions documentate
+- [x] Script test versionamento
+- [x] Script test dati seed/migration
 
 ## Note TODO
 - [ ] Promozione automatica waitlist in booking draft (attualmente notifica + fulfill)

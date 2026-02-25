@@ -140,7 +140,11 @@ Monolite modulare con confini per sottosistema; transazioni su booking; servizi 
 │   ├── user-stories.md
 │   ├── git-workflow.md
 │   ├── local-ai-prompts.md
-│   └── engine-versions.md
+│   ├── engine-versions.md
+│   └── versioning-and-data-tests.md
+├── scripts/
+│   ├── run-versioning-checks.sh
+│   └── run-data-smoke-tests.sh
 └── src/
     ├── main/
     │   ├── java/com/smartautorental/platform/... (moduli)
@@ -293,6 +297,10 @@ curl -X POST http://localhost:8080/api/v1/integrations/payments/webhook \
   - pagamento + conferma booking (`PaymentConfirmationIntegrationTest`)
 - End-to-end test (MockMvc + JWT + PostgreSQL container):
   - flusso login -> availability -> booking (`BookingE2ETest`)
+- Script test di versionamento:
+  - `./scripts/run-versioning-checks.sh`
+- Script test dati su DB seed/migration:
+  - `./scripts/run-data-smoke-tests.sh`
 
 ## 11) Roadmap evolutiva
 

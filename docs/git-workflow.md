@@ -22,3 +22,8 @@
 - almeno 1 review tecnica
 - test verdi su branch PR
 - nessun merge senza migration/documentazione aggiornate
+- line ending coerenti gestiti da `.gitattributes`
+
+## Gate minimi prima merge
+- `./scripts/run-versioning-checks.sh`
+- `./scripts/run-data-smoke-tests.sh`
