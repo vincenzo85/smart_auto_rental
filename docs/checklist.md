@@ -16,6 +16,7 @@
 - [x] OpenAPI/Swagger
 - [x] Seed iniziale dati demo
 - [x] Dashboard grafica modulare (auth, availability, booking, admin report)
+- [x] Seed esteso auto demo (>=10)
 
 ## Funzioni Interessanti
 - [x] Pricing dinamico semplice
@@ -47,6 +48,7 @@
 - [x] Engine versions documentate
 - [x] Script test versionamento
 - [x] Script test dati seed/migration
+- [x] Documentazione frontend console
 
 ## Note TODO
 - [ ] Promozione automatica waitlist in booking draft (attualmente notifica + fulfill)

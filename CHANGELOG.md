@@ -19,6 +19,9 @@
 - Script locali per test di versionamento e data smoke.
 - Dashboard grafica modulare su `/` e `/ui`.
 - UI controller test per rendering template.
+- Seed flotta esteso con auto aggiuntive (`V3__add_more_seed_cars.sql`).
+- Migliorata UX delle `select` frontend (alto contrasto).
+- Credenziali demo mostrate in dashboard e guida frontend dedicata.
 
 ### Notes
 - Build/test locali richiedono Maven installato o container build.

@@ -35,7 +35,7 @@ branch_count=$(query "select count(*) from branches;")
 pass "Seed branches present: $branch_count"
 
 car_count=$(query "select count(*) from cars;")
-(( car_count >= 5 )) || fail "Expected at least 5 cars, found $car_count"
+(( car_count >= 10 )) || fail "Expected at least 10 cars, found $car_count"
 pass "Seed cars present: $car_count"
 
 user_count=$(query "select count(*) from users;")

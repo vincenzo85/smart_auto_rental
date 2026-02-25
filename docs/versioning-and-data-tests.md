@@ -26,7 +26,7 @@ Prerequisito:
 
 Controlla:
 - migration Flyway applicate
-- seed minimo `branches/cars/users`
+- seed minimo `branches/cars/users` (flotta >= 10 auto)
 - assenza duplicati su `license_plate`
 
 Esecuzione:

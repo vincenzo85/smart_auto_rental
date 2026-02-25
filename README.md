@@ -141,7 +141,8 @@ Monolite modulare con confini per sottosistema; transazioni su booking; servizi 
 │   ├── git-workflow.md
 │   ├── local-ai-prompts.md
 │   ├── engine-versions.md
-│   └── versioning-and-data-tests.md
+│   ├── versioning-and-data-tests.md
+│   └── frontend-console.md
 ├── scripts/
 │   ├── run-versioning-checks.sh
 │   └── run-data-smoke-tests.sh
@@ -240,6 +241,7 @@ docker compose up --build
 
 Dashboard grafica:
 - `http://localhost:8080/`
+- guida frontend: `docs/frontend-console.md`
 
 ### Locale
 Prerequisiti: Java 21 + Maven 3.9+
@@ -253,6 +255,8 @@ Creati al bootstrap applicazione:
 - `admin@smartauto.local / Admin123!`
 - `operator@smartauto.local / Operator123!`
 - `customer@smartauto.local / Customer123!`
+
+Le stesse credenziali demo sono mostrate anche direttamente nella UI (`/`).
 
 ## 9) Esempi curl
 
