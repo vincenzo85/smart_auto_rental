@@ -49,6 +49,8 @@
 - [x] Script test versionamento
 - [x] Script test dati seed/migration
 - [x] Documentazione frontend console
+- [x] Documentazione accesso DB (pgAdmin/Adminer)
+- [x] CLI scaffolding con menu interattivo
 
 ## Note TODO
 - [ ] Promozione automatica waitlist in booking draft (attualmente notifica + fulfill)

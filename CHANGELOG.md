@@ -22,6 +22,9 @@
 - Seed flotta esteso con auto aggiuntive (`V3__add_more_seed_cars.sql`).
 - Migliorata UX delle `select` frontend (alto contrasto).
 - Credenziali demo mostrate in dashboard e guida frontend dedicata.
+- Aggiunto Adminer in Docker (`http://localhost:8081`) come UI DB equivalente a phpMyAdmin.
+- Documentazione DB access (`docs/database-access.md`).
+- Script scaffolding CLI con menu per generazione componenti standard (`scripts/scaffold-cli.sh`).
 
 ### Notes
 - Build/test locali richiedono Maven installato o container build.

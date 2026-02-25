@@ -142,8 +142,12 @@ Monolite modulare con confini per sottosistema; transazioni su booking; servizi 
 │   ├── local-ai-prompts.md
 │   ├── engine-versions.md
 │   ├── versioning-and-data-tests.md
-│   └── frontend-console.md
+│   ├── frontend-console.md
+│   ├── database-access.md
+│   └── scaffold-cli-guide.md
 ├── scripts/
+│   ├── scaffold-cli.sh
+│   ├── generate-single-file.sh
 │   ├── run-versioning-checks.sh
 │   └── run-data-smoke-tests.sh
 └── src/
@@ -243,6 +247,11 @@ Dashboard grafica:
 - `http://localhost:8080/`
 - guida frontend: `docs/frontend-console.md`
 
+Database tools:
+- `http://localhost:5050` (pgAdmin)
+- `http://localhost:8081` (Adminer)
+- guida DB: `docs/database-access.md`
+
 ### Locale
 Prerequisiti: Java 21 + Maven 3.9+
 ```bash
@@ -318,7 +327,21 @@ curl -X POST http://localhost:8080/api/v1/integrations/payments/webhook \
 - Script test dati su DB seed/migration:
   - `./scripts/run-data-smoke-tests.sh`
 
-## 11) Roadmap evolutiva
+## 11) CLI scaffolding
+
+- menu interattivo:
+  - `./scripts/scaffold-cli.sh menu`
+- comandi rapidi:
+  - `./scripts/scaffold-cli.sh feature <feature_name>`
+  - `./scripts/scaffold-cli.sh controller <feature_name> <name>`
+  - `./scripts/scaffold-cli.sh service <feature_name> <name>`
+  - `./scripts/scaffold-cli.sh dto <feature_name> <name> <request|response>`
+  - `./scripts/scaffold-cli.sh api <feature_name> <resource_name>`
+  - `./scripts/scaffold-cli.sh migration <description>`
+- guida completa:
+  - `docs/scaffold-cli-guide.md`
+
+## 12) Roadmap evolutiva
 
 ### v2
 - Redis lock/distributed cache
