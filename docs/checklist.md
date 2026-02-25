@@ -51,6 +51,8 @@
 - [x] Documentazione frontend console
 - [x] Documentazione accesso DB (pgAdmin/Adminer)
 - [x] CLI scaffolding con menu interattivo
+- [x] Suite test end-to-end scriptata
+- [x] Suite test regressione scriptata
 
 ## Note TODO
 - [ ] Promozione automatica waitlist in booking draft (attualmente notifica + fulfill)

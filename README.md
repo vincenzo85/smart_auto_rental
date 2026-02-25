@@ -144,12 +144,15 @@ Monolite modulare con confini per sottosistema; transazioni su booking; servizi 
 │   ├── versioning-and-data-tests.md
 │   ├── frontend-console.md
 │   ├── database-access.md
-│   └── scaffold-cli-guide.md
+│   ├── scaffold-cli-guide.md
+│   └── testing-e2e-regression.md
 ├── scripts/
 │   ├── scaffold-cli.sh
 │   ├── generate-single-file.sh
 │   ├── run-versioning-checks.sh
-│   └── run-data-smoke-tests.sh
+│   ├── run-data-smoke-tests.sh
+│   ├── run-regression-tests.sh
+│   └── run-e2e-tests.sh
 └── src/
     ├── main/
     │   ├── java/com/smartautorental/platform/... (moduli backend + UiController)
@@ -326,6 +329,12 @@ curl -X POST http://localhost:8080/api/v1/integrations/payments/webhook \
   - `./scripts/run-versioning-checks.sh`
 - Script test dati su DB seed/migration:
   - `./scripts/run-data-smoke-tests.sh`
+- Script test regressione:
+  - `./scripts/run-regression-tests.sh`
+- Script test end-to-end:
+  - `./scripts/run-e2e-tests.sh`
+- guida test:
+  - `docs/testing-e2e-regression.md`
 
 ## 11) CLI scaffolding
 

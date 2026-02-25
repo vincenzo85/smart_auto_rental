@@ -25,6 +25,8 @@
 - Aggiunto Adminer in Docker (`http://localhost:8081`) come UI DB equivalente a phpMyAdmin.
 - Documentazione DB access (`docs/database-access.md`).
 - Script scaffolding CLI con menu per generazione componenti standard (`scripts/scaffold-cli.sh`).
+- Aggiunte suite scriptate `run-e2e-tests.sh` e `run-regression-tests.sh`.
+- Guida dedicata test E2E/regressione (`docs/testing-e2e-regression.md`).
 
 ### Notes
 - Build/test locali richiedono Maven installato o container build.
