@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Auto Rental | Documentazione e Presentazione</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Chivo:wght@400;600;700&family=Space+Mono:wght@400;700&display=swap');
+
+        :root {
+            --bg: #f3efe4;
+            --ink: #152129;
+            --muted: #5e6e77;
+            --card: rgba(255, 255, 255, 0.82);
+            --line: rgba(21, 33, 41, 0.15);
+            --accent: #d2643f;
+            --accent-2: #1e7d74;
+            --shadow: 0 20px 50px rgba(21, 33, 41, 0.12);
+            --radius: 22px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: 'Chivo', 'Trebuchet MS', sans-serif;
+            color: var(--ink);
+            background:
+                radial-gradient(circle at 12% 15%, rgba(210, 100, 63, 0.20), transparent 45%),
+                radial-gradient(circle at 88% 84%, rgba(30, 125, 116, 0.18), transparent 45%),
+                linear-gradient(140deg, #f8f4e7 0%, #e9f0f3 100%);
+            line-height: 1.55;
+        }
+
+        .shell {
+            width: min(1100px, 92vw);
+            margin: 0 auto;
+            padding: 3rem 0 4rem;
+        }
+
+        .hero {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 2rem;
+            margin-bottom: 1.4rem;
+            position: relative;
+            overflow: hidden;
+            animation: rise 700ms ease-out both;
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            width: 220px;
+            height: 220px;
+            right: -70px;
+            top: -90px;
+            background: radial-gradient(circle, rgba(210, 100, 63, 0.28), transparent 65%);
+            pointer-events: none;
+        }
+
+        .eyebrow {
+            font-family: 'Space Mono', monospace;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--accent-2);
+            font-size: 0.85rem;
+            margin: 0 0 0.5rem;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: clamp(1.8rem, 3.8vw, 3rem);
+            line-height: 1.1;
+        }
+
+        .subtitle {
+            max-width: 70ch;
+            color: var(--muted);
+            margin-top: 0.9rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.7rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.58rem 0.95rem;
+            border-radius: 999px;
+            text-decoration: none;
+            border: 1px solid transparent;
+            font-weight: 600;
+            transition: transform 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
+        }
+
+        .btn-primary {
+            color: #fff;
+            background: var(--ink);
+            box-shadow: 0 10px 26px rgba(21, 33, 41, 0.24);
+        }
+
+        .btn-secondary {
+            color: var(--ink);
+            border-color: var(--line);
+            background: rgba(255, 255, 255, 0.75);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 1rem;
+        }
+
+        .card {
+            grid-column: span 12;
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 1.25rem;
+            animation: rise 700ms ease-out both;
+        }
+
+        .card.delay-1 { animation-delay: 90ms; }
+        .card.delay-2 { animation-delay: 170ms; }
+        .card.delay-3 { animation-delay: 250ms; }
+
+        @media (min-width: 860px) {
+            .card.span-7 { grid-column: span 7; }
+            .card.span-5 { grid-column: span 5; }
+            .card.span-6 { grid-column: span 6; }
+        }
+
+        h2 {
+            margin-top: 0;
+            margin-bottom: 0.55rem;
+            font-size: 1.25rem;
+        }
+
+        .media {
+            margin-top: 0.8rem;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--line);
+            background: #fff;
+        }
+
+        img {
+            width: 100%;
+            display: block;
+            height: auto;
+        }
+
+        audio {
+            width: 100%;
+            margin-top: 0.7rem;
+        }
+
+        ul {
+            margin: 0;
+            padding-left: 1.1rem;
+            color: var(--muted);
+        }
+
+        li + li {
+            margin-top: 0.35rem;
+        }
+
+        .mono {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.88rem;
+        }
+
+        footer {
+            margin-top: 1.2rem;
+            text-align: center;
+            color: var(--muted);
+            font-size: 0.88rem;
+        }
+
+        @keyframes rise {
+            from {
+                transform: translateY(12px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+<main class="shell">
+    <section class="hero">
+        <p class="eyebrow">Smart Auto Rental Platform</p>
+        <h1>Documentazione estesa + presentazione GitHub Pages</h1>
+        <p class="subtitle">
+            Pagina statica pronta per GitHub Pages con asset visuali e audio del progetto.
+            Pubblicabile direttamente dalla cartella <span class="mono">/docs</span>.
+        </p>
+        <div class="actions">
+            <a class="btn btn-primary" href="../README.md">Apri README principale</a>
+            <a class="btn btn-secondary" href="README.md">Apri indice docs</a>
+            <a class="btn btn-secondary" href="multi-agent-ollama-architecture.md">Apri blueprint multi-agent</a>
+        </div>
+    </section>
+
+    <section class="grid">
+        <article class="card span-7 delay-1">
+            <h2>Architettura piattaforma</h2>
+            <p>Vista ad alto livello della piattaforma di noleggio auto intelligente.</p>
+            <div class="media">
+                <img src="Architettura%20piattaforma%20noleggio%20auto%20intelligente.png" alt="Diagramma architettura piattaforma noleggio auto intelligente">
+            </div>
+        </article>
+
+        <article class="card span-5 delay-2">
+            <h2>Mind map progetto</h2>
+            <p>Mappa concettuale con componenti principali e relazioni funzionali.</p>
+            <div class="media">
+                <img src="NotebookLM%20Mind%20Map.png" alt="Mind map del progetto Smart Auto Rental">
+            </div>
+        </article>
+
+        <article class="card span-6 delay-3">
+            <h2>Presentazione audio</h2>
+            <p>Traccia vocale di approfondimento sul monolite modulare e sugli agenti AI.</p>
+            <audio controls preload="metadata">
+                <source src="Monolite_Modulare_Spring_Boot_e_Agenti_AI.m4a" type="audio/mp4">
+                Il browser non supporta il player audio HTML5.
+            </audio>
+            <p class="mono">File: Monolite_Modulare_Spring_Boot_e_Agenti_AI.m4a</p>
+        </article>
+
+        <article class="card span-6 delay-3">
+            <h2>Guide tecniche correlate</h2>
+            <ul>
+                <li><a href="payment-core-integration.md">Integrazione payment core</a></li>
+                <li><a href="multi-agent-orchestrator-api.md">API orchestratore agenti</a></li>
+                <li><a href="testing-e2e-regression.md">Strategia test E2E e regressione</a></li>
+                <li><a href="git-workflow.md">Workflow Git del progetto</a></li>
+                <li><a href="scaffold-cli-guide.md">Guida scaffold CLI</a></li>
+            </ul>
+        </article>
+    </section>
+
+    <footer>
+        Smart Auto Rental Platform - Documentazione pubblicabile su GitHub Pages da <span class="mono">/docs</span>
+    </footer>
+</main>
+</body>
+</html>

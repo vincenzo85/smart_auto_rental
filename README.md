@@ -135,8 +135,16 @@ Monolite modulare con confini per sottosistema; transazioni su booking; servizi 
 ├── docker-compose.yml
 ├── pom.xml
 ├── CHANGELOG.md
+├── LICENSE
+├── NOTICE
+├── CITATION.cff
 ├── README.md
 ├── docs/
+│   ├── README.md
+│   ├── index.html
+│   ├── Architettura piattaforma noleggio auto intelligente.png
+│   ├── NotebookLM Mind Map.png
+│   ├── Monolite_Modulare_Spring_Boot_e_Agenti_AI.m4a
 │   ├── checklist.md
 │   ├── user-stories.md
 │   ├── git-workflow.md
@@ -433,6 +441,28 @@ curl -X POST http://localhost:8080/api/v1/integrations/payments/webhook \
 - multi-filiale avanzato e tariffazione per stagione
 - telemetria veicoli (IoT) + predizione manutenzione
 - split in microservizi (booking/payment/pricing)
+
+## 15) Documentazione estesa e GitHub Pages
+
+- indice documentazione: `docs/README.md`
+- presentazione HTML pronta per Pages: `docs/index.html`
+- asset multimediali collegati:
+  - `docs/Architettura piattaforma noleggio auto intelligente.png`
+  - `docs/NotebookLM Mind Map.png`
+  - `docs/Monolite_Modulare_Spring_Boot_e_Agenti_AI.m4a`
+- pubblicazione GitHub Pages:
+  - `Settings > Pages`
+  - `Build and deployment: Deploy from a branch`
+  - branch `main` (o branch pubblicato) + cartella `/docs`
+
+## 16) Licenza e citazione
+
+- licenza open source: `Apache-2.0` in `LICENSE`
+- obbligo citazione/autore: `NOTICE` (da mantenere in redistribuzioni e opere derivate)
+- metadata citazione: `CITATION.cff`
+- citazione richiesta:
+  - `Smart Auto Rental Platform - Vincenzo Di Franco`
+  - `https://www.linkedin.com/in/vincenzo-di-franco-38216645`
 
 ---
 Dettagli operativi aggiuntivi in `docs/`.
