@@ -1,6 +1,6 @@
 # Smart Auto Rental Platform
 
-Piattaforma MVP Spring Boot per noleggio auto smart con pricing dinamico base, disponibilita, prenotazioni, pagamenti simulati, manutenzione, audit e osservabilita.
+Piattaforma MVP Spring Boot per noleggio auto smart con pricing dinamico base, disponibilita, prenotazioni, pagamenti orchestrati verso core esterno, manutenzione, audit e osservabilita.
 
 ## 1) OODA
 
@@ -11,7 +11,7 @@ Piattaforma MVP Spring Boot per noleggio auto smart con pricing dinamico base, d
   - gestione flotta (CRUD auto)
   - ricerca disponibilita per sede/intervallo/categoria
   - prenotazione con conflitto date
-  - pagamento mock e conferma condizionata
+  - pagamento ad alto livello delegato a payment core esterno
   - manutenzione e blocco disponibilita
   - report admin
 - Vincoli tecnici: Java 21, Spring Boot 3.x, PostgreSQL, Docker Compose, Flyway.
@@ -36,7 +36,7 @@ Piattaforma MVP Spring Boot per noleggio auto smart con pricing dinamico base, d
   - disponibilita
   - booking con prevenzione overbooking
   - pricing base + weekend + discount + insurance + dynamic surcharge
-  - pagamento mock e conferma booking
+  - pagamento orchestrato e conferma booking
   - manutenzione
   - audit trail
   - scheduler scadenza booking pending
@@ -44,7 +44,7 @@ Piattaforma MVP Spring Boot per noleggio auto smart con pricing dinamico base, d
 - Should:
   - waitlist automatica
   - report top-rented/utilization
-  - webhook mock pagamento
+  - webhook aggiornamento pagamento dal core esterno
 - Could:
   - coupon avanzati
   - notifiche reali email/SMS
@@ -76,7 +76,7 @@ Funzionalita introdotte:
 - waitlist se slot non disponibile
 - audit trail prenotazioni
 - scheduler per booking pending scaduti
-- webhook mock pagamento
+- webhook pagamento da core esterno
 
 ### C (Critica)
 Failure mode / anti-pattern evitati:
@@ -95,7 +95,7 @@ Monolite modulare con confini per sottosistema; transazioni su booking; servizi 
 - `Fleet Management` (`fleet`)
 - `Booking Engine` (`booking`)
 - `Pricing Engine` (`pricing`)
-- `Payment Simulation` (`payment`)
+- `Payment Orchestration` (`payment`)
 - `Maintenance & Availability` (`maintenance`, `fleet/availability`)
 - `Audit/Logs` (`booking_audits`, SLF4J)
 - `Notification stub` (`notification`)
@@ -111,7 +111,8 @@ Monolite modulare con confini per sottosistema; transazioni su booking; servizi 
         |
         +--> [Booking Service] ---> [Pricing Service]
         |           |               [Coupon Service]
-        |           +--> [Payment Service] ---> [Webhook]
+        |           +--> [Payment Service] ---> [Payment Core]
+        |           |                         [Webhook]
         |           +--> [Maintenance Check]
         |           +--> [Audit + Notification]
         |
@@ -134,8 +135,16 @@ Monolite modulare con confini per sottosistema; transazioni su booking; servizi 
 ├── docker-compose.yml
 ├── pom.xml
 ├── CHANGELOG.md
+├── LICENSE
+├── NOTICE
+├── CITATION.cff
 ├── README.md
 ├── docs/
+│   ├── README.md
+│   ├── index.html
+│   ├── Architettura piattaforma noleggio auto intelligente.png
+│   ├── NotebookLM Mind Map.png
+│   ├── Monolite_Modulare_Spring_Boot_e_Agenti_AI.m4a
 │   ├── checklist.md
 │   ├── user-stories.md
 │   ├── git-workflow.md
@@ -144,15 +153,31 @@ Monolite modulare con confini per sottosistema; transazioni su booking; servizi 
 │   ├── versioning-and-data-tests.md
 │   ├── frontend-console.md
 │   ├── database-access.md
+│   ├── payment-core-integration.md
+│   ├── multi-agent-ollama-architecture.md
+│   ├── multi-agent-orchestrator-api.md
 │   ├── scaffold-cli-guide.md
 │   └── testing-e2e-regression.md
+├── docker/
+│   └── payment-core-mock/
+│       └── mappings/charge.json
+├── agents/
+│   ├── README.md
+│   ├── agent-registry.example.yaml
+│   ├── tool-manifest.example.json
+│   ├── request.example.json
+│   ├── langgraph_skeleton.py
+│   ├── orchestrator_api.py
+│   ├── requirements.txt
+│   └── Dockerfile
 ├── scripts/
 │   ├── scaffold-cli.sh
 │   ├── generate-single-file.sh
 │   ├── run-versioning-checks.sh
 │   ├── run-data-smoke-tests.sh
 │   ├── run-regression-tests.sh
-│   └── run-e2e-tests.sh
+│   ├── run-e2e-tests.sh
+│   └── setup-git-hooks.sh
 └── src/
     ├── main/
     │   ├── java/com/smartautorental/platform/... (moduli backend + UiController)
@@ -194,6 +219,7 @@ Monolite modulare con confini per sottosistema; transazioni su booking; servizi 
 - `POST /api/v1/payments/{bookingId}/retry`
 - `GET /api/v1/payments/{bookingId}/transactions`
 - `POST /api/v1/integrations/payments/webhook`
+- guida integrazione core: `docs/payment-core-integration.md`
 
 ### Maintenance
 - `POST /api/v1/maintenance`
@@ -250,6 +276,10 @@ Dashboard grafica:
 - `http://localhost:8080/`
 - guida frontend: `docs/frontend-console.md`
 
+Payment core mock (separato):
+- `http://localhost:8090` (WireMock)
+- guida integrazione core: `docs/payment-core-integration.md`
+
 Database tools:
 - `http://localhost:5050` (pgAdmin)
 - `http://localhost:8081` (Adminer)
@@ -259,6 +289,30 @@ Database tools:
 Prerequisiti: Java 21 + Maven 3.9+
 ```bash
 mvn clean spring-boot:run
+```
+
+### Payment core mode
+- default: `stub` (locale/test), nessuna dipendenza esterna
+- default Docker: `http` verso mock `payment-core` separato
+- delega reale: impostare `app.payment-core.mode=http` e l'endpoint del core reale
+
+Esempio `application.yml`:
+```yaml
+app:
+  payment-core:
+    mode: http
+    base-url: "http://localhost:8090"
+    charge-path: "/api/v1/core/payments/charge"
+    api-key: "core-shared-key"
+```
+
+Switch rapido al core reale (Docker):
+```bash
+APP_PAYMENT_CORE_MODE=http \
+APP_PAYMENT_CORE_BASE_URL=https://payment-core.company.tld \
+APP_PAYMENT_CORE_CHARGE_PATH=/api/v1/core/payments/charge \
+APP_PAYMENT_CORE_API_KEY=core-shared-key \
+docker compose up -d app
 ```
 
 ## 8) Demo utenti seed
@@ -289,7 +343,7 @@ curl -G "http://localhost:8080/api/v1/availability" \
   --data-urlencode "category=ECONOMY"
 ```
 
-### Crea booking con pagamento forzato SUCCESS
+### Crea booking online (payment orchestration)
 ```bash
 curl -X POST http://localhost:8080/api/v1/bookings \
   -H "Authorization: Bearer <TOKEN>" \
@@ -301,8 +355,7 @@ curl -X POST http://localhost:8080/api/v1/bookings \
     "insuranceSelected": true,
     "couponCode": "WELCOME10",
     "payAtDesk": false,
-    "allowWaitlist": true,
-    "forcedPaymentStatus": "SUCCESS"
+    "allowWaitlist": true
   }'
 ```
 
@@ -350,7 +403,32 @@ curl -X POST http://localhost:8080/api/v1/integrations/payments/webhook \
 - guida completa:
   - `docs/scaffold-cli-guide.md`
 
-## 12) Roadmap evolutiva
+## 12) Git policy
+
+- policy progetto: commit solo da branch `feature/*`
+- setup locale:
+  - `./scripts/setup-git-hooks.sh`
+- guida completa:
+  - `docs/git-workflow.md`
+
+## 13) AI multi-agent
+
+- blueprint multi-agent con scope piccolo (change/defect/test):
+  - `docs/multi-agent-ollama-architecture.md`
+- template agent registry + function contracts + request payload:
+  - `agents/agent-registry.example.yaml`
+  - `agents/tool-manifest.example.json`
+  - `docs/schemas/agent-request.schema.json`
+  - `docs/schemas/agent-output.schema.json`
+- quickstart LangGraph/Ollama:
+  - `agents/README.md`
+  - `agents/langgraph_skeleton.py`
+- orchestratore API operativo (FastAPI):
+  - `agents/orchestrator_api.py`
+  - `docs/multi-agent-orchestrator-api.md`
+  - avvio docker: `docker compose --profile agents up -d --build agent-orchestrator`
+
+## 14) Roadmap evolutiva
 
 ### v2
 - Redis lock/distributed cache
@@ -363,6 +441,28 @@ curl -X POST http://localhost:8080/api/v1/integrations/payments/webhook \
 - multi-filiale avanzato e tariffazione per stagione
 - telemetria veicoli (IoT) + predizione manutenzione
 - split in microservizi (booking/payment/pricing)
+
+## 15) Documentazione estesa e GitHub Pages
+
+- indice documentazione: `docs/README.md`
+- presentazione HTML pronta per Pages: `docs/index.html`
+- asset multimediali collegati:
+  - `docs/Architettura piattaforma noleggio auto intelligente.png`
+  - `docs/NotebookLM Mind Map.png`
+  - `docs/Monolite_Modulare_Spring_Boot_e_Agenti_AI.m4a`
+- pubblicazione GitHub Pages:
+  - `Settings > Pages`
+  - `Build and deployment: Deploy from a branch`
+  - branch `main` (o branch pubblicato) + cartella `/docs`
+
+## 16) Licenza e citazione
+
+- licenza open source: `Apache-2.0` in `LICENSE`
+- obbligo citazione/autore: `NOTICE` (da mantenere in redistribuzioni e opere derivate)
+- metadata citazione: `CITATION.cff`
+- citazione richiesta:
+  - `Smart Auto Rental Platform - Vincenzo Di Franco`
+  - `https://www.linkedin.com/in/vincenzo-di-franco-38216645`
 
 ---
 Dettagli operativi aggiuntivi in `docs/`.

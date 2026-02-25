@@ -1,6 +1,5 @@
 package com.smartautorental.platform.payment.controller;
 
-import com.smartautorental.platform.payment.dto.PaymentRetryRequest;
 import com.smartautorental.platform.payment.dto.PaymentRetryResponse;
 import com.smartautorental.platform.payment.dto.PaymentTransactionResponse;
 import com.smartautorental.platform.payment.dto.PaymentWebhookRequest;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -26,19 +24,16 @@ public class PaymentController {
 
     @PostMapping("/api/v1/payments/{bookingId}/retry")
     @PreAuthorize("hasAnyRole('CUSTOMER','ADMIN','OPERATOR')")
-    public PaymentRetryResponse retryPayment(@PathVariable Long bookingId,
-                                             @RequestBody(required = false) PaymentRetryRequest request) {
+    public PaymentRetryResponse retryPayment(@PathVariable Long bookingId) {
         var actor = currentUserService.requireCurrentUser();
-        return paymentService.retryPayment(
-                bookingId,
-                request != null ? request.forcedStatus() : null,
-                actor);
+        return paymentService.retryPayment(bookingId, actor);
     }
 
     @GetMapping("/api/v1/payments/{bookingId}/transactions")
     @PreAuthorize("hasAnyRole('CUSTOMER','ADMIN','OPERATOR')")
     public List<PaymentTransactionResponse> history(@PathVariable Long bookingId) {
-        return paymentService.paymentHistory(bookingId).stream()
+        var actor = currentUserService.requireCurrentUser();
+        return paymentService.paymentHistory(bookingId, actor).stream()
                 .map(tx -> new PaymentTransactionResponse(
                         tx.getId(),
                         tx.getAmount(),

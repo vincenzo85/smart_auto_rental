@@ -1,0 +1,74 @@
+version: 1
+
+orchestrator:
+  framework: langgraph
+  human_gate_required: true
+  branch_prefix: feature/
+
+agents:
+  - id: intake
+    role: classify_request
+    model: ollama:your-coder-model
+    temperature: 0
+    max_steps: 1
+    allowed_tools: []
+    output_schema: RequestClassification
+
+  - id: planner
+    role: plan_dag
+    model: ollama:your-coder-model
+    temperature: 0
+    max_steps: 3
+    allowed_tools: [read_issue_context]
+    output_schema: TaskPlan
+
+  - id: impact
+    role: impact_analysis
+    model: ollama:your-coder-model
+    temperature: 0
+    max_steps: 6
+    allowed_tools: [repo_search, read_file]
+    output_schema: ImpactReport
+
+  - id: implementer
+    role: code_changes
+    model: ollama:your-coder-model
+    temperature: 0
+    max_steps: 12
+    allowed_tools: [repo_search, read_file, apply_patch]
+    path_allowlist:
+      - src/main/**
+    output_schema: PatchBundle
+
+  - id: tester
+    role: test_changes
+    model: ollama:your-coder-model
+    temperature: 0
+    max_steps: 10
+    allowed_tools: [read_file, apply_patch]
+    path_allowlist:
+      - src/test/**
+      - scripts/**
+    output_schema: TestPatchBundle
+
+  - id: verifier
+    role: execute_checks
+    model: ollama:your-coder-model
+    temperature: 0
+    max_steps: 6
+    allowed_tools: [run_command]
+    command_allowlist:
+      - test_unit
+      - test_integration
+      - test_regression
+      - test_e2e
+      - lint
+    output_schema: VerificationReport
+
+  - id: reviewer
+    role: quality_review
+    model: ollama:your-coder-model
+    temperature: 0
+    max_steps: 6
+    allowed_tools: [repo_search, read_file]
+    output_schema: ReviewFindings

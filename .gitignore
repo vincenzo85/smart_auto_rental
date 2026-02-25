@@ -6,3 +6,7 @@
 .env
 single-output.txt
 project-single-file.txt
+
+# Python artifacts
+__pycache__/
+*.pyc

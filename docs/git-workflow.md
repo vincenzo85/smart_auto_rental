@@ -1,15 +1,39 @@
 # Git Workflow e Continuous Commit
 
 ## Branch Strategy
-- `main`: stabile e rilasciabile
-- `dev`: integrazione continua funzionalita validate
-- `feature/<nome-feature>`: sviluppo verticale per singola feature
+- `main`: stabile e rilasciabile, no commit diretti
+- `feature/<nome-feature>`: unico branch consentito per i commit di sviluppo
 
 ## Flusso consigliato
-1. Creare branch `feature/booking-conflict-lock` da `dev`.
+1. Creare branch `feature/booking-conflict-lock` da `main`.
 2. Commit incrementali piccoli e descrittivi.
-3. Push + PR verso `dev` con checklist test.
-4. Merge `dev -> main` solo per release.
+3. Push + PR verso `main` con checklist test.
+4. Merge solo via PR approvata.
+
+## Enforcement locale (feature-only)
+Attiva gli hook locali:
+
+```bash
+./scripts/setup-git-hooks.sh
+```
+
+Hook applicati:
+- `pre-commit`: blocca commit fuori da `feature/*`
+- `pre-merge-commit`: blocca merge commit fuori da `feature/*`
+- `pre-push`: blocca push dirette verso `main|master|dev|develop`
+
+Override emergenza (sconsigliato):
+
+```bash
+ALLOW_PROTECTED_BRANCH_COMMIT=1 git commit -m "..."
+```
+
+## Enforcement remoto (consigliato)
+Configura anche branch protection sul provider Git (GitHub/GitLab/Bitbucket):
+- blocco push diretto su `main`
+- merge solo via PR/MR
+- review obbligatoria
+- status check obbligatori prima del merge
 
 ## Commit message pattern
 - `feat(booking): add conflict detection with pessimistic lock`
@@ -23,6 +47,7 @@
 - test verdi su branch PR
 - nessun merge senza migration/documentazione aggiornate
 - line ending coerenti gestiti da `.gitattributes`
+- branch policy enforced via hook locali (`.githooks`)
 
 ## Gate minimi prima merge
 - `./scripts/run-versioning-checks.sh`

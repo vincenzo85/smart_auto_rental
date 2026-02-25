@@ -7,3 +7,10 @@ spring:
 app:
   integrations:
     api-key: "integration-docker-key"
+  payment-core:
+    mode: http
+    base-url: "http://payment-core:8080"
+    charge-path: "/api/v1/core/payments/charge"
+    api-key: ""
+    connect-timeout-ms: 2000
+    read-timeout-ms: 5000

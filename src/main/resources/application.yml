@@ -29,6 +29,13 @@ app:
     expiration-minutes: 180
   integrations:
     api-key: "integration-dev-key"
+  payment-core:
+    mode: stub
+    base-url: "http://localhost:8090"
+    charge-path: "/api/v1/core/payments/charge"
+    api-key: ""
+    connect-timeout-ms: 2000
+    read-timeout-ms: 5000
   scheduler:
     pending-booking-expiration-ms: 60000
 

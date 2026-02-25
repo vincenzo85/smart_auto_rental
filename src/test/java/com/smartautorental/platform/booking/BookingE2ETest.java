@@ -65,8 +65,7 @@ class BookingE2ETest extends AbstractIntegrationTest {
                   "insuranceSelected": true,
                   "couponCode": "WELCOME10",
                   "payAtDesk": false,
-                  "allowWaitlist": false,
-                  "forcedPaymentStatus": "SUCCESS"
+                  "allowWaitlist": false
                 }
                 """.formatted(carId);
 

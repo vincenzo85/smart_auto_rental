@@ -1,0 +1,91 @@
+{
+  "version": 1,
+  "tools": [
+    {
+      "name": "repo_search",
+      "description": "Search code with ripgrep",
+      "input_schema": {
+        "type": "object",
+        "required": ["query"],
+        "properties": {
+          "query": { "type": "string" },
+          "glob": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "read_file",
+      "description": "Read file content with optional line range",
+      "input_schema": {
+        "type": "object",
+        "required": ["path"],
+        "properties": {
+          "path": { "type": "string" },
+          "start_line": { "type": "integer", "minimum": 1 },
+          "end_line": { "type": "integer", "minimum": 1 }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "apply_patch",
+      "description": "Apply unified patch to a file",
+      "input_schema": {
+        "type": "object",
+        "required": ["path", "patch"],
+        "properties": {
+          "path": { "type": "string" },
+          "patch": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "run_command",
+      "description": "Run only allowlisted command IDs",
+      "input_schema": {
+        "type": "object",
+        "required": ["command_id"],
+        "properties": {
+          "command_id": {
+            "type": "string",
+            "enum": ["test_unit", "test_integration", "test_regression", "test_e2e", "lint"]
+          },
+          "args": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "git_create_branch",
+      "description": "Create feature branch",
+      "input_schema": {
+        "type": "object",
+        "required": ["name"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "pattern": "^feature/.+"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "git_commit",
+      "description": "Commit staged changes",
+      "input_schema": {
+        "type": "object",
+        "required": ["message"],
+        "properties": {
+          "message": { "type": "string", "minLength": 5 }
+        },
+        "additionalProperties": false
+      }
+    }
+  ]
+}

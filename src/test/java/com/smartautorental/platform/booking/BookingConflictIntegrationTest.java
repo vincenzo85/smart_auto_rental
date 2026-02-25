@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.smartautorental.platform.booking.dto.BookingCreateRequest;
 import com.smartautorental.platform.booking.model.BookingStatus;
-import com.smartautorental.platform.booking.model.PaymentStatus;
 import com.smartautorental.platform.booking.service.BookingService;
 import com.smartautorental.platform.common.exception.BusinessException;
 import com.smartautorental.platform.common.exception.ErrorCode;
@@ -30,8 +29,7 @@ class BookingConflictIntegrationTest extends AbstractIntegrationTest {
                 false,
                 null,
                 false,
-                false,
-                PaymentStatus.SUCCESS
+                false
         );
 
         var first = bookingService.create(request);

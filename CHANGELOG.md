@@ -7,7 +7,7 @@
 - Fleet CRUD + availability search.
 - Booking engine con lock pessimista e controllo conflitti.
 - Pricing engine (base, weekend, durata, insurance, dynamic surcharge, coupon base).
-- Payment simulation + retry + webhook mock.
+- Payment orchestration via external core adapter (`stub`/`http`) + retry + webhook.
 - Waitlist e audit trail booking.
 - Maintenance scheduling/history.
 - Admin reports (top rented, utilization).
@@ -27,6 +27,10 @@
 - Script scaffolding CLI con menu per generazione componenti standard (`scripts/scaffold-cli.sh`).
 - Aggiunte suite scriptate `run-e2e-tests.sh` e `run-regression-tests.sh`.
 - Guida dedicata test E2E/regressione (`docs/testing-e2e-regression.md`).
+- Aggiunto servizio Docker `payment-core` mock separato (WireMock) e profilo Docker app in `mode=http`.
+- Aggiunto enforcement Git feature-branch-only con hook locali (`.githooks`) e setup script (`scripts/setup-git-hooks.sh`).
+- Aggiunto blueprint multi-agent AI con Ollama + function calling (`docs/multi-agent-ollama-architecture.md`, `agents/*`, `docs/schemas/*`).
+- Aggiunto orchestratore multi-agent API minimale (`agents/orchestrator_api.py`) con profilo Docker `agents`.
 
 ### Notes
 - Build/test locali richiedono Maven installato o container build.

@@ -1,0 +1,21 @@
+cff-version: 1.2.0
+message: "If you use this project, please cite it as follows."
+title: "Smart Auto Rental Platform"
+version: "1.0.0"
+type: software
+authors:
+  - family-names: "Di Franco"
+    given-names: "Vincenzo"
+    affiliation: "https://www.linkedin.com/in/vincenzo-di-franco-38216645"
+repository-code: "https://github.com/vincenzo85/smart_auto_rental"
+license: "Apache-2.0"
+url: "https://github.com/vincenzo85/smart_auto_rental"
+date-released: "2026-02-25"
+preferred-citation:
+  type: software
+  title: "Smart Auto Rental Platform"
+  authors:
+    - family-names: "Di Franco"
+      given-names: "Vincenzo"
+      affiliation: "https://www.linkedin.com/in/vincenzo-di-franco-38216645"
+  url: "https://github.com/vincenzo85/smart_auto_rental"
