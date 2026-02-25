@@ -22,3 +22,7 @@
 - almeno 1 review tecnica
 - test verdi su branch PR
 - nessun merge senza migration/documentazione aggiornate
+
+## Gate minimi prima merge
+- `./scripts/run-versioning-checks.sh`
+- `./scripts/run-data-smoke-tests.sh`
