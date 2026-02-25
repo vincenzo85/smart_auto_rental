@@ -446,10 +446,12 @@ curl -X POST http://localhost:8080/api/v1/integrations/payments/webhook \
 
 - indice documentazione: `docs/README.md`
 - presentazione HTML pronta per Pages: `docs/index.html`
+- URL GitHub Pages (pubblico): `https://vincenzo85.github.io/smart_auto_rental/`
 - asset multimediali collegati:
   - `docs/Architettura piattaforma noleggio auto intelligente.png`
   - `docs/NotebookLM Mind Map.png`
   - `docs/Monolite_Modulare_Spring_Boot_e_Agenti_AI.m4a`
+- PNG zoomabili: nella pagina `index.html` puoi zoomare le immagini con zoom browser (`Ctrl/Cmd +` o pinch su mobile) e aprirle in tab separata per vedere il dettaglio completo.
 - pubblicazione GitHub Pages:
   - `Settings > Pages`
   - `Build and deployment: Deploy from a branch`
