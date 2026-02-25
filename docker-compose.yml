@@ -1,0 +1,43 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: smart-rental-postgres
+    environment:
+      POSTGRES_DB: smart_rental
+      POSTGRES_USER: smart_user
+      POSTGRES_PASSWORD: smart_pass
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U smart_user -d smart_rental"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  pgadmin:
+    image: dpage/pgadmin4:8.14
+    container_name: smart-rental-pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@smartauto.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+    depends_on:
+      - postgres
+
+  app:
+    build: .
+    container_name: smart-rental-app
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      APP_INTEGRATIONS_API_KEY: integration-docker-key
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  postgres_data:

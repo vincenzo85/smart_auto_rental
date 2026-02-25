@@ -1,0 +1,46 @@
+spring:
+  application:
+    name: smart-auto-rental-platform
+  datasource:
+    url: jdbc:postgresql://localhost:5432/smart_rental
+    username: smart_user
+    password: smart_pass
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        format_sql: true
+        jdbc:
+          time_zone: UTC
+    open-in-view: false
+  flyway:
+    enabled: true
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+
+server:
+  port: 8080
+
+app:
+  jwt:
+    secret: "smart-auto-rental-super-secret-key-change-me-123456789"
+    expiration-minutes: 180
+  integrations:
+    api-key: "integration-dev-key"
+  scheduler:
+    pending-booking-expiration-ms: 60000
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: always
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html

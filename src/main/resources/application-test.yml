@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+  flyway:
+    enabled: true
+
+app:
+  jwt:
+    secret: "smart-auto-rental-test-secret-key-1234567890"
+    expiration-minutes: 60
+  integrations:
+    api-key: "integration-test-key"
+  scheduler:
+    pending-booking-expiration-ms: 3600000

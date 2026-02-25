@@ -1,0 +1,238 @@
+Agisci come un team multidisciplinare composto da:
+- Senior Java Spring Boot Architect
+- Backend Engineer (REST API, Security, DB)
+- DevOps Engineer (Docker, Docker Compose, CI basics)
+- QA Engineer (test unit/integration)
+- Product Manager (MVP + roadmap)
+- Software Reviewer (clean code, maintainability)
+- Data Modeler (JPA/PostgreSQL)
+- API Designer (OpenAPI/Swagger)
+
+Obiettivo:
+Progetta e genera un progetto completo in Java con Spring Boot, dockerizzato, interessante e realistico, sul tema:
+"Smart Auto Rental Platform" (piattaforma di noleggio auto con pricing dinamico base, disponibilità, prenotazioni, pagamenti simulati, gestione flotte e manutenzione).
+
+Usa il framework mentale OODA + PECx + SYS in modo esplicito.
+devi farmi una check list e una user story completa sia lato utente sia lato amministratore sia lato programmatore, deve essere previsto il layer osservabilità, 
+deve prevedere delle api per l'integrazione di terze parti e test end to end, devono essere previsti prompt efficaci per la generazione di codice con ia locali, 
+deve essere prevista un documentazione, un commit continuo delle funzionalità con diverse branch dev main feature branch e merge con commenti, devono essere svolti test di versionamento e sui dati e devono essere previste documentazione e numero di versione dei vari motori con change log, ogni volta che si fa una funzione, si modifica la checklist e la documentazione
+
+==================================================
+1) OODA (devi mostrarlo nel ragionamento e nell’output)
+==================================================
+
+[OBSERVE]
+Analizza il problema e definisci:
+- attori (cliente, admin, operatore, manutentore)
+- casi d’uso principali
+- vincoli tecnici
+- rischi comuni (overbooking, concorrenza prenotazioni, date invalide, pagamento fallito, auto in manutenzione)
+
+[ORIENT]
+Valuta le scelte architetturali e motivale:
+- monolite modulare Spring Boot vs microservizi (scegli monolite modulare per MVP, ma prepara estendibilità)
+- PostgreSQL
+- Redis opzionale per cache/locking (se utile)
+- Docker Compose per ambiente locale
+- JWT auth con ruoli
+- Flyway/Liquibase per migration
+- OpenAPI/Swagger
+- Testcontainers per integration test (se possibile)
+- gestione concorrenza su prenotazioni (locking ottimistico/pessimistico + validazione business)
+
+[DECIDE]
+Definisci l’MVP con priorità MoSCoW:
+- Must
+- Should
+- Could
+- Won’t (per ora)
+
+[ACT]
+Genera il progetto:
+- struttura cartelle
+- codice sorgente
+- entity, dto, mapper
+- service, repository, controller
+- exception handling centralizzato
+- validazioni
+- dockerfile + docker-compose
+- file application.yml / application-docker.yml
+- script seed dati iniziali
+- documentazione README
+- collezione endpoint esempi
+- test principali
+
+==================================================
+2) PECx (Pensiero Espansivo-Critico) — modalità richiesta
+==================================================
+
+Applica PECx così:
+- P (Problema): definisci il problema reale del noleggio auto (non solo CRUD)
+- E (Espansione): proponi funzionalità intelligenti utili e realistiche
+- C (Critica): individua failure mode e anti-pattern
+- x (Sintesi operativa): convergi su soluzione implementabile in MVP
+
+Richiedo esplicitamente:
+- alternative architetturali con pro/contro
+- scelte motivate e non arbitrarie
+- attenzione a semplicità + qualità codice + estendibilità
+- niente “enterprise boilerplate” inutile
+
+==================================================
+3) SYS (System Thinking) — visione di sistema
+==================================================
+
+Modella il progetto come sistema con sottosistemi:
+- Identity & Access
+- Fleet Management
+- Booking Engine
+- Pricing Engine (semplice ma estendibile)
+- Payment Simulation
+- Maintenance & Availability
+- Audit/Logs
+- Notification stub (email/SMS mock)
+
+Mostra:
+- flusso dati principale
+- confini tra moduli
+- dipendenze interne
+- punti di estensione futuri (es. pagamenti reali, telemetria IoT, multi-filiale)
+
+==================================================
+4) Requisiti funzionali del progetto (MVP)
+==================================================
+
+Tema:
+Piattaforma noleggio auto smart per una piccola azienda con più sedi.
+
+Funzionalità minime:
+1. Registrazione/login utenti (JWT)
+2. Ruoli: CUSTOMER, ADMIN, OPERATOR
+3. CRUD auto con:
+   - targa
+   - marca
+   - modello
+   - categoria (economy, suv, luxury, van)
+   - sede
+   - stato (AVAILABLE, BOOKED, IN_MAINTENANCE, DISABLED)
+   - tariffa base giornaliera
+4. Ricerca disponibilità auto per:
+   - sede
+   - intervallo date/ora
+   - categoria opzionale
+5. Prenotazione auto con controllo conflitti date
+6. Calcolo prezzo:
+   - tariffa base * giorni
+   - supplemento weekend (semplice)
+   - sconto durata > X giorni
+   - fee assicurazione opzionale
+7. Simulazione pagamento (mock)
+   - SUCCESS / FAILED / PENDING
+8. Conferma prenotazione solo se pagamento OK (o modalità “pay at desk” opzionale)
+9. Cancellazione prenotazione con policy base (es. rimborso parziale se < 24h)
+10. Gestione manutenzione auto:
+   - blocco disponibilità durante manutenzione
+   - storico manutenzioni
+11. API documentate con Swagger/OpenAPI
+12. Seed iniziale con utenti demo, auto demo, sedi demo
+
+==================================================
+5) Requisiti non funzionali
+==================================================
+
+- Java 21 (preferibile) o Java 17 se necessario
+- Spring Boot 3.x
+- Maven
+- PostgreSQL
+- Docker + Docker Compose
+- Codice pulito, commenti solo dove utile
+- DTO separati dalle Entity
+- Validazione input con Bean Validation
+- Error handling standard JSON (timestamp, status, code, message, details)
+- Logging con SLF4J
+- Configurazione profili (local, docker, test)
+- README completo per avvio rapido
+
+==================================================
+6) Requisiti tecnici dettagliati (implementazione)
+==================================================
+
+Genera:
+- pom.xml con dipendenze necessarie
+- Dockerfile per app Spring Boot
+- docker-compose.yml con:
+  - app
+  - postgres
+  - pgadmin (opzionale ma utile)
+- Flyway o Liquibase migrations
+- package structure chiara (feature-based o layered, ma motivata)
+- mapping DTO <-> Entity (MapStruct opzionale)
+- global exception handler
+- security config moderna (Spring Security 6)
+- JWT utilities
+- endpoint auth + booking + cars + admin
+- test unitari service critici
+- test integrazione almeno per:
+  - ricerca disponibilità
+  - creazione prenotazione con conflitto
+  - pagamento + conferma prenotazione
+
+==================================================
+7) Funzionalità “interessanti” (non banali) da includere
+==================================================
+
+Inserisci almeno 3 di queste:
+- pricing dinamico semplice (es. +15% se disponibilità categoria bassa)
+- prevenzione overbooking con lock/transazione
+- waitlist se auto non disponibile
+- coupon/promocode base
+- audit trail prenotazioni
+- webhook mock (es. pagamento confermato)
+- report admin: auto più noleggiate, tasso utilizzo per sede
+- scheduler per scadere prenotazioni pending
+
+==================================================
+8) Output richiesto (ordine obbligatorio)
+==================================================
+
+1. OODA (Observe / Orient / Decide / Act)
+2. PECx (P / E / C / x)
+3. Architettura del sistema (SYS) con diagramma testuale
+4. Struttura progetto (tree)
+5. Codice completo file per file (se troppo lungo: in blocchi coerenti e continuabili)
+6. Dockerfile + docker-compose.yml
+7. Migrations SQL
+8. README avvio e test API
+9. Esempi chiamate curl/Postman
+10. Test strategy + test implementati
+11. Roadmap evolutiva (v2/v3)
+
+==================================================
+9) Vincoli di qualità del codice
+==================================================
+
+- Evita classi “God Object”
+- Evita logica business nei controller
+- Evita usare Entity direttamente come request/response
+- Nomi chiari e coerenti
+- Gestisci edge case:
+  - date invertite
+  - prenotazione nel passato
+  - auto in manutenzione
+  - pagamento fallito
+  - concorrenza prenotazioni
+- Inserisci TODO espliciti solo per parti opzionali
+
+==================================================
+10) Modalità di consegna
+==================================================
+
+Prima dammi:
+- panoramica architetturale
+- elenco endpoint
+- schema DB
+
+Poi procedi con il codice completo.
+
+Se il codice è molto lungo, spezzalo in sezioni ma senza perdere coerenza.
+Mantieni il progetto eseguibile localmente con docker compose up. 
