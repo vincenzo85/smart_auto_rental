@@ -1,5 +1,9 @@
 # Smart Auto Rental Platform
 
+Link rapidi:
+- GitHub Pages: [https://vincenzo85.github.io/smart_auto_rental/](https://vincenzo85.github.io/smart_auto_rental/)
+- README su GitHub (cliccabile): [README.md](https://github.com/vincenzo85/smart_auto_rental/blob/main/README.md)
+
 Piattaforma MVP Spring Boot per noleggio auto smart con pricing dinamico base, disponibilita, prenotazioni, pagamenti orchestrati verso core esterno, manutenzione, audit e osservabilita.
 
 ## 1) OODA
@@ -446,7 +450,7 @@ curl -X POST http://localhost:8080/api/v1/integrations/payments/webhook \
 
 - indice documentazione: `docs/README.md`
 - presentazione HTML pronta per Pages: `docs/index.html`
-- URL GitHub Pages (pubblico): `https://vincenzo85.github.io/smart_auto_rental/`
+- URL GitHub Pages (pubblico): [https://vincenzo85.github.io/smart_auto_rental/](https://vincenzo85.github.io/smart_auto_rental/)
 - asset multimediali collegati:
   - `docs/Architettura piattaforma noleggio auto intelligente.png`
   - `docs/NotebookLM Mind Map.png`

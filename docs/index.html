@@ -41,6 +41,33 @@
             padding: 3rem 0 4rem;
         }
 
+        .top-strip {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.7rem 1rem;
+            margin-bottom: 1rem;
+            padding: 0.75rem 1rem;
+            border-radius: 14px;
+            border: 1px solid var(--line);
+            background: rgba(255, 255, 255, 0.72);
+        }
+
+        .top-strip a {
+            color: var(--ink);
+            font-weight: 700;
+            text-underline-offset: 0.15em;
+        }
+
+        .version-badge {
+            display: inline-flex;
+            align-items: center;
+            border: 1px solid rgba(21, 33, 41, 0.22);
+            border-radius: 999px;
+            padding: 0.14rem 0.6rem;
+            background: rgba(30, 125, 116, 0.1);
+        }
+
         .hero {
             background: var(--card);
             border: 1px solid var(--line);
@@ -272,6 +299,12 @@
 </head>
 <body>
 <main class="shell">
+    <section class="top-strip" aria-label="Link rapidi pagina">
+        <span class="mono">GitHub Pages: <a href="https://vincenzo85.github.io/smart_auto_rental/">https://vincenzo85.github.io/smart_auto_rental/</a></span>
+        <span class="mono version-badge">Versione pagina: v2026.02.25-r1</span>
+        <span class="mono">README: <a href="https://github.com/vincenzo85/smart_auto_rental/blob/main/README.md" target="_blank" rel="noopener noreferrer">clicca qui</a></span>
+    </section>
+
     <section class="hero">
         <p class="eyebrow">Smart Auto Rental Platform</p>
         <h1>Documentazione estesa + presentazione GitHub Pages</h1>
